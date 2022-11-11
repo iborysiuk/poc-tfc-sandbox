@@ -7,10 +7,13 @@ terraform {
   }
 }
 
-provider "tfe" {}
+provider "tfe" {
+  hostname = var.hostname
+  token = var.token
+}
 
 data "tfe_organization" "org" {
-  name = "iborysiuk-sandbox"
+  name = var.organization
 }
 
 resource "tfe_workspace" "default" {
@@ -27,8 +30,27 @@ resource "tfe_workspace" "default" {
   vcs_repo {
     branch             = "main"
     identifier         = "iborysiuk/poc-tfc-sandbox"
-    oauth_token_id     = "ot-Ji1Ut1azvF83jyhs"
+    oauth_token_id     = var.oauth_token_id
     ingress_submodules = true
   }
   tag_names = ["new-tag"]
+}
+
+-----
+variable "organization" {
+  default = "iborysiuk-sandbox"
+  type = string
+}
+
+variable "hostname" {
+  default = "app.terraform.io" ### Default hostname
+  type = string
+}
+
+variable "token" {
+  type = string 
+}
+
+variable "oauth_token_id" {
+  type = string
 }
