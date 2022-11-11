@@ -9,10 +9,13 @@ terraform {
 
 provider "tfe" {}
 
+data "tfe_organization" "org" {
+  name = "iborysiuk-sandbox"
+}
 
 resource "tfe_workspace" "default" {
   count                         = 10
-  organization                  = "iborysiuk-sandbox"
+  organization                  = data.tfe_organization.org.name
   name                          = format("test-workspace-%s", count.index)
   terraform_version             = "latest"
   execution_mode                = "remote"
