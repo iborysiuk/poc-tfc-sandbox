@@ -36,7 +36,7 @@ resource "tfe_workspace" "default" {
   tag_names = ["new-tag"]
 }
 
------
+# -----
 variable "organization" {
   default = "iborysiuk-sandbox"
   type = string
